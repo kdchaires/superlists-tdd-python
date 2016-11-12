@@ -18,22 +18,6 @@ class HomePageTest(TestCase):
 		expected_html = render_to_string('home.html')
 		self.assertEqual(response.content.decode(), expected_html)
 
-
-class ListViewTest(TestCase):
-
-	def test_uses_list_template(self):
-		response = self.client.get('/lists/the-only-list-in-the-world/')
-		self.assertTemplateUsed(response, 'list.html')
-
-	def test_displays_all_items(self):
-		Item.objects.create(text='itemey 1')
-		Item.objects.create(text='itemey 2')
-
-		response = self.client.get('/lists/the-only-list-in-the-world/')
-
-		self.assertContains(response, 'itemey 1')
-		self.assertContains(response, 'itemey 2')
-
 class ItemModelsTest(TestCase):
 
 	def test_saving_and_retrieving_items(self):
@@ -53,10 +37,19 @@ class ItemModelsTest(TestCase):
 		self.assertEqual(first_saved_item.text, 'The first (ever) list item')
 		self.assertEqual(second_saved_item.text, 'Item the second')
 
-	def test_home_page_only_saves_items_when_necessary(self):
-		request = HttpRequest()
-		home_page(request)
-		self.assertEqual(Item.objects.count(), 0)
+class ListViewTest(TestCase):
+	def test_uses_list_template(self):
+		response = self.client.get('/lists/the-only-list-in-the-world/')
+		self.assertTemplateUsed(response, 'list.html')
+
+	def test_display_all_items(self):
+		Item.objects.create(text='itemy 1')
+		Item.objects.create(text='itemy 2')
+
+		response = self.client.get('/lists/the-only-list-in-the-world/')
+
+		self.assertContains(response, 'itemy 1')
+		self.assertContains(response, 'itemy 2')
 
 class NewListTest(TestCase):
 
@@ -74,4 +67,4 @@ class NewListTest(TestCase):
 			'/lists/new',
 			data={'item_text': 'A new list item'}
 		)
-		self.assertRedirects(response,'/lists/the-only-list-in-the-world/')
+		self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
