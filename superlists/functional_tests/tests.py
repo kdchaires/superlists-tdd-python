@@ -1,5 +1,6 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
 class NewVisitorTest(LiveServerTestCase):
@@ -39,23 +40,22 @@ class NewVisitorTest(LiveServerTestCase):
 		# When she hits enter, the page updates, and now the page lists
 		# "1: Buy peacock feathers" as an item in a to-do list table
 		inputbox.send_keys(Keys.ENTER)
-		self.browser.implicitly_wait(100)
-		self.browser.implicitly_wait(100)
+		self.browser.implicitly_wait(50)
+
 		edith_list_url = self.browser.current_url
 		self.assertRegex(edith_list_url, '/lists/.+')
 		self.check_for_row_in_list_table('1: Buy peacock feathers')
-
         # There is still a text box inviting her to add another item. She
         # enters "Use peacock feathers to make a fly" (Edith is very methodical)
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Use peacock feathers to make a fly')
 		inputbox.send_keys(Keys.ENTER)
-		self.browser.implicitly_wait(100)
-		self.browser.implicitly_wait(100)
+		self.browser.implicitly_wait(50)
 
 		# The page updates again, and now shows both items on her list
 		self.check_for_row_in_list_table('1: Buy peacock feathers')
 		self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+
 
 		# Now a new user, Francis, comes aLong to the site.
 
@@ -77,7 +77,6 @@ class NewVisitorTest(LiveServerTestCase):
 		inputbox.send_keys('Buy milk')
 		inputbox.send_keys(Keys.ENTER)
 		self.browser.implicitly_wait(100)
-		self.browser.implicitly_wait(100)
 
 		# Francis gets his own unique URL
 		francis_list_url = self.browser.current_url
@@ -89,6 +88,19 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertNotIn('Buy peacock feathers', page_text)
 		self.assertIn('Buy milk', page_text)
 
+	def test_layout_and_styling(self):
+		# Edith goes to the home page
+		self.browser.get(self.live_server_url)
+		self.browser.set_window_size(1024,768)
+
+        # She notices the input box is nicely centered
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		self.assertAlmostEqual(
+			inputbox.location['x'] + inputbox.size['width'] / 2,
+			512,
+			delta=5
+		)
+
 		# Edith wonders whether the site will remember her list. Then she sees
 		# that the site has generated a unique URL for her -- there is some
 		# explanatory text to that effect.
@@ -96,6 +108,7 @@ class NewVisitorTest(LiveServerTestCase):
 		# She visits that URL - her to-do list is still there.
 
 		# Satisfied, she goes back to sleep
+
 
 if __name__ == '__main__':
 	unittest.main(warnings='ignore')
