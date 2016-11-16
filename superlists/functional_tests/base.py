@@ -38,3 +38,6 @@ class FunctionalTest(StaticLiveServerTestCase):
 		self.browser.implicitly_wait(100)
 		self.assertIn(row_text, [row.text for row in rows])
 		self.browser.implicitly_wait(100)
+
+	def get_item_input_box(self):
+		return self.browser.find_element_by_id('id_text')
