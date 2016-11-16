@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(5r3hk1byy-(!ar=(!fm=uy7tw7b=2md5q45jk0a-d$h@b0fke'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['slk.local.mx']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -102,3 +102,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
+#STATIC_ROOT = os.path.join(BASE_DIR, '../static')
