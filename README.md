@@ -1,5 +1,9 @@
 ## Ejercicios del libro Test-Driven Development with Python
 
+[![Travis Build Status](https://travis-ci.org/kdchaires/superlists-tdd-python.svg?branch=master)](https://travis-ci.org/kdchaires/superlists-tdd-python)
+
+
+
 <h4 class="resource">Test-Driven Development with Python</h4>
 Obey the Testing Goat: Using Django, Selenium, and JavaScript
 By Harry J.W. Percival
