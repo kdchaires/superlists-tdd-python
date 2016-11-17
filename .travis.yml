@@ -3,6 +3,10 @@ python:
     - "3.5"
 before_install:
     - "export DISPLAY=:99.0"
+    - "wget http://chromedriver.storage.googleapis.com/2.23/chromedriver_linux64.zip"
+    - "unzip chromedriver_linux64.zip"
+    - "sudo chmod u+x chromedriver"
+    - "sudo mv chromedriver /usr/bin/"
     - "sh -e /etc/init.d/xvfb start"
     - "cd superlists"
 install:
