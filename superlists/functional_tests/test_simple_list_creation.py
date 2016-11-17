@@ -47,7 +47,8 @@ class NewVisitorTest(FunctionalTest):
 		## of Edith's is comming through from cookies etc
 		self.browser.refresh()
 		self.browser.quit()
-		self.browser = webdriver.Chrome()
+		chomedriver="/usr/bin/chromedriver"
+        self.browser = webdriver.Chrome(chomedriver)
 
 		# Francis visits the home page. There is no sign of Edith's
 		# list
